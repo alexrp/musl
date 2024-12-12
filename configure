@@ -356,6 +356,13 @@ tryflag CFLAGS_C99FSE -fexcess-precision=standard \
 tryflag CFLAGS_C99FSE -frounding-math
 
 #
+# Prevent the compiler from turning a * b + c into an fma() call.
+# Clang at least has been known to do this in the implementation of
+# fma() itself, causing infinite recursion.
+#
+tryflag CFLAGS_C99FSE -ffp-contract=off
+
+#
 # Semantically we want to insist that our sources follow the
 # C rules for type-based aliasing, but most if not all real-world
 # compilers are known or suspected to have critical bugs in their
